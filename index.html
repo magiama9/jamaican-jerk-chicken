@@ -87,33 +87,40 @@
         }
       }
 
-
       // Returns whitespace trimmed value of the selected form element
-      trimValue = str => {
-        return `$(#${str})`.val().trim();
-      };
-
-      $("#add-btn").on("click", function(event) {
-        event.preventDefault();
-        var newCharacter = {
-          name: $("#name")
+      trimValue = () => {
+        let trimmedArray = [
+          $("#name")
             .val()
             .trim(),
-          role: $("#role")
+          $("#size")
             .val()
             .trim(),
-          age: $("#age")
+          $("#phone")
             .val()
             .trim(),
-          forcePoints: $("#force-points")
+          $("#email")
             .val()
             .trim()
-        };
+        ];
 
-        // Question: What does this code do??
-        $.post("/api/characters", newCharacter).then(function(data) {
-          console.log("add.html", data);
-          alert("Adding character...");
+        return trimmedArray;
+      };
+
+      $("#res-btn").on("click", function(e) {
+        e.preventDefault();
+
+        // Creates a new reservation object with trimmed values of form input
+        const resy = new Reservation(
+          trimValue()[0],
+          trimValue()[1],
+          trimValue()[2],
+          trimValue()[3]
+        );
+        console.log(resy);
+        $.post("/api/reserve", resy).then(function(data) {
+          console.log(data);
+          alert("Adding reservation...");
         });
       });
     </script>
