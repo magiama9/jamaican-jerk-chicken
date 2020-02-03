@@ -3,24 +3,56 @@ $(() => {
   $("#userInfo").hide();
 });
 
+// Instantiates class for restaurant
+class Restaurant {
+  constructor(seats, maxTable) {
+    this.seats = seats;
+    this.maxTable = maxTable;
+  }
+
+  tableSize(num) {
+    let tableSize = num;
+    if (num & (2 != 0)) {
+      tableSize += 1;
+    }
+    this.seats -= tableSize;
+  }
+
+  seatsRemaining() {
+    return this.seats;
+  }
+}
+
+const restaurant = new Restaurant(30, 6);
+console.log(restaurant);
+
+// Stores table count
 let tableCount = 1;
+
 // Class that describes reservations.
 // Expects all of the information to be strings
 class Reservation {
   constructor(name, size, phone, email) {
     this.name = name;
     this.size = size;
+    this.tableSize = restaurant.tableSize(size); // Table size differs from party size if party size is odd
     this.phone = phone;
     this.email = email;
     this.table = tableCount;
   }
 }
 
+// Increases table count by 1
 iterateTable = () => {
   tableCount += 1;
 };
 
-// Returns whitespace trimmed value of the selected form element
+// Decreases table count by 1
+decrementTable = () => {
+  tableCount -= 1;
+};
+
+// Returns whitespace trimmed value of the selected form elements
 trimValue = () => {
   let trimmedArray = [
     $("#name")
@@ -48,6 +80,7 @@ clearForm = () => {
   $("#email").val("");
 };
 
+// Adds a reservation list item to the table of lists. Utilizes table logic in reservations.js
 addReservation = obj => {
   let content = `
           <li class="list-group-item mt-4">
@@ -86,6 +119,7 @@ $("#res-btn").on("click", function(e) {
   $.post("/api/reserve", resy).then(function(data) {
     console.log(data);
     $("#current").html("");
+    $("#waiting").html("");
     data.forEach(idx => {
       addReservation(idx);
     });
