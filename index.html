@@ -79,7 +79,8 @@
             <div class="card-header">
               <h4>Current Reservations</h4>
             </div>
-            <div class="card-body" id="current"></div>
+            <div class="card-body"></div>
+            <ul id="current" class="list-group"></ul>
           </div>
 
           <!-- Waiting List Card -->
@@ -146,7 +147,6 @@
 
       addReservation = obj => {
         let content = `
-              <ul id="tableList" class="list-group">
                 <li class="list-group-item mt-4">
                   <h2>Table ${obj.table}</h2>
                   <hr />
@@ -155,9 +155,12 @@
                   <h2>Phone: ${obj.phone}</h2>
                   <h2>Party Size: ${obj.size}</h2>
                 </li>
-              </ul>
             `;
-        $("#current").append(content);
+        if (obj.table < 5) {
+          $("#current").append(content);
+        } else {
+          $("#waiting").append(content);
+        }
       };
 
       $("#book-btn").on("click", function(e) {
@@ -179,8 +182,8 @@
         clearForm();
         $.post("/api/reserve", resy).then(function(data) {
           console.log(data);
+          $("#current").html("");
           data.forEach(idx => {
-            $("#current").html("");
             addReservation(idx);
           });
         });
