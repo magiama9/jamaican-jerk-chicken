@@ -22,7 +22,7 @@
         <h3>Book the worst table in the galaxy!</h3>
         <hr />
         <a href="/"
-          ><button class="btn btn-danger btn-lg">
+          ><button id="book-btn" class="btn btn-danger btn-lg">
             <span class="fa fa-eye"></span> Book Your Table
           </button></a
         >
@@ -72,6 +72,38 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Current Tables in Use -->
+          <div class="card">
+            <div class="card-header">
+              <h4>Current Reservations</h4>
+            </div>
+            <div class="card-body">
+              <ul id="tableList" class="list-group">
+                <li class="list-group-item mt-4">
+                  <h2>Table #1</h2>
+                  <hr />
+                  <h2>ID:</h2>
+                  <h2>Name: blah</h2>
+                  <h2>Email:</h2>
+                  <h2>Phone: oasnifa</h2>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Waiting List Card -->
+          <div class="card mt-4">
+            <div class="card-header">
+              <h4>Waiting List</h4>
+            </div>
+            <div class="card-body">
+              <ul id="waitList" class="list-group"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script type="text/javascript">
@@ -88,7 +120,6 @@
       }
 
       // Returns whitespace trimmed value of the selected form element
-      
       trimValue = () => {
         let trimmedArray = [
           $("#name")
@@ -114,8 +145,10 @@
         $("#size").val("");
         $("#phone").val("");
         $("#email").val("");
-      }
+      };
 
+      $("#book-btn").on("click", function(e) {
+        e.preventDefault();
       $("#res-btn").on("click", function(e) {
         e.preventDefault();
 
