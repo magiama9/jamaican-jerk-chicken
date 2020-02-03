@@ -88,6 +88,7 @@
       }
 
       // Returns whitespace trimmed value of the selected form element
+      
       trimValue = () => {
         let trimmedArray = [
           $("#name")
@@ -107,6 +108,14 @@
         return trimmedArray;
       };
 
+      // Clears form elements
+      clearForm = () => {
+        $("#name").val("");
+        $("#size").val("");
+        $("#phone").val("");
+        $("#email").val("");
+      }
+
       $("#res-btn").on("click", function(e) {
         e.preventDefault();
 
@@ -117,10 +126,10 @@
           trimValue()[2],
           trimValue()[3]
         );
+        clearForm();
         console.log(resy);
         $.post("/api/reserve", resy).then(function(data) {
           console.log(data);
-          alert("Adding reservation...");
         });
       });
     </script>

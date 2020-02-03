@@ -27,7 +27,7 @@ app.get("/", function(req, res) {
 
 // Displays all characters
 app.get("/api/reserve", function(req, res) {
-  return res.json(characters);
+  return res.json(tables);
 });
 
 // Create New Reservation - takes in JSON input
