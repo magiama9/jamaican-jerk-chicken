@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sam's Weird Restaurant</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Sam's Weird Restaurant</h1>
+        <h3>Book the worst table in the galaxy!</h3>
+        <hr />
+        <a href="/"
+          ><button class="btn btn-danger btn-lg">
+            <span class="fa fa-eye"></span> Book Your Table
+          </button></a
+        >
+        <a href="/"
+          ><button class="btn btn-primary btn-lg">
+            <span class="fa fa-eye"></span> View Reservations
+          </button></a
+        >
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3><strong>Your Information</strong></h3>
+            </div>
+            <div class="card-body">
+              <form method="POST" role="form">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name" />
+                </div>
+
+                <div class="form-group">
+                  <label for="role">Contact Phone Number</label>
+                  <input type="text" class="form-control" id="phone" />
+                </div>
+                <div class="form-group">
+                  <label for="force-points">Contact Email</label>
+                  <input type="text" class="form-control" id="email" />
+                </div>
+                <div class="form-group">
+                  <label for="age">Party Size</label>
+                  <input type="text" class="form-control" id="size" />
+                </div>
+              </form>
+              <br />
+              <div class="text-right">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-md"
+                  id="res-btn"
+                >
+                  <span class="fa fa-fire"></span> Book Your Table
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      // Class that describes reservations.
+      // Expects all of the information to be strings
+
+      class Reservation {
+        constructor(name, size, phone, email) {
+          this.name = name;
+          this.size = size;
+          this.phone = phone;
+          this.email = email;
+        }
+      }
+
+
+      // Returns whitespace trimmed value of the selected form element
+      trimValue = str => {
+        return `$(#${str})`.val().trim();
+      };
+
+      $("#add-btn").on("click", function(event) {
+        event.preventDefault();
+        var newCharacter = {
+          name: $("#name")
+            .val()
+            .trim(),
+          role: $("#role")
+            .val()
+            .trim(),
+          age: $("#age")
+            .val()
+            .trim(),
+          forcePoints: $("#force-points")
+            .val()
+            .trim()
+        };
+
+        // Question: What does this code do??
+        $.post("/api/characters", newCharacter).then(function(data) {
+          console.log("add.html", data);
+          alert("Adding character...");
+        });
+      });
+    </script>
+  </body>
+</html>
