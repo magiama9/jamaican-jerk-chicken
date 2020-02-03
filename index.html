@@ -89,7 +89,7 @@
               <h4>Waiting List</h4>
             </div>
             <div class="card-body">
-              <ul id="waitList" class="list-group"></ul>
+              <ul id="waiting" class="list-group"></ul>
             </div>
           </div>
         </div>
@@ -101,6 +101,8 @@
       $(() => {
         $("#userInfo").hide();
       });
+
+      let tableCount = 1;
       // Class that describes reservations.
       // Expects all of the information to be strings
       class Reservation {
@@ -109,13 +111,13 @@
           this.size = size;
           this.phone = phone;
           this.email = email;
-          this.table = 1;
-        }
-
-        iterateTable() {
-          this.table += 1;
+          this.table = tableCount;
         }
       }
+
+      iterateTable = () => {
+        tableCount += 1;
+      };
 
       // Returns whitespace trimmed value of the selected form element
       trimValue = () => {
@@ -178,7 +180,7 @@
           trimValue()[2],
           trimValue()[3]
         );
-        resy.iterateTable();
+        iterateTable();
         clearForm();
         $.post("/api/reserve", resy).then(function(data) {
           console.log(data);
