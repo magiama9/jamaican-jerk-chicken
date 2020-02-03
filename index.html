@@ -79,18 +79,7 @@
             <div class="card-header">
               <h4>Current Reservations</h4>
             </div>
-            <div class="card-body">
-              <ul id="tableList" class="list-group">
-                <li class="list-group-item mt-4">
-                  <h2>Table #1</h2>
-                  <hr />
-                  <h2>ID:</h2>
-                  <h2>Name: blah</h2>
-                  <h2>Email:</h2>
-                  <h2>Phone: oasnifa</h2>
-                </li>
-              </ul>
-            </div>
+            <div class="card-body" id="current"></div>
           </div>
 
           <!-- Waiting List Card -->
@@ -107,7 +96,6 @@
     </div>
 
     <script type="text/javascript">
-
       // On document ready, hides user info card
       $(() => {
         $("#userInfo").hide();
@@ -120,6 +108,11 @@
           this.size = size;
           this.phone = phone;
           this.email = email;
+          this.table = 1;
+        }
+
+        iterateTable() {
+          this.table += 1;
         }
       }
 
@@ -151,6 +144,22 @@
         $("#email").val("");
       };
 
+      addReservation = obj => {
+        let content = `
+              <ul id="tableList" class="list-group">
+                <li class="list-group-item mt-4">
+                  <h2>Table ${obj.table}</h2>
+                  <hr />
+                  <h2>Name: ${obj.name}</h2>
+                  <h2>Email: ${obj.email}</h2>
+                  <h2>Phone: ${obj.phone}</h2>
+                  <h2>Party Size: ${obj.size}</h2>
+                </li>
+              </ul>
+            `;
+        $("#current").append(content);
+      };
+
       $("#book-btn").on("click", function(e) {
         e.preventDefault();
         $("#userInfo").toggle();
@@ -166,10 +175,14 @@
           trimValue()[2],
           trimValue()[3]
         );
+        resy.iterateTable();
         clearForm();
-        console.log(resy);
         $.post("/api/reserve", resy).then(function(data) {
           console.log(data);
+          data.forEach(idx => {
+            $("#current").html("");
+            addReservation(idx);
+          });
         });
       });
     </script>
