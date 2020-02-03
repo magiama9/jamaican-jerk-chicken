@@ -34,7 +34,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card">
+          <div class="card" id="userInfo">
             <div class="card-header">
               <h3><strong>Your Information</strong></h3>
             </div>
@@ -107,9 +107,13 @@
     </div>
 
     <script type="text/javascript">
+
+      // On document ready, hides user info card
+      $(() => {
+        $("#userInfo").hide();
+      });
       // Class that describes reservations.
       // Expects all of the information to be strings
-
       class Reservation {
         constructor(name, size, phone, email) {
           this.name = name;
@@ -149,6 +153,9 @@
 
       $("#book-btn").on("click", function(e) {
         e.preventDefault();
+        $("#userInfo").toggle();
+      });
+
       $("#res-btn").on("click", function(e) {
         e.preventDefault();
 
